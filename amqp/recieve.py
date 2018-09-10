@@ -5,6 +5,7 @@
 
 
 import pika
+import datetime
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
 channel = connection.channel()
@@ -20,7 +21,7 @@ channel.queue_declare(queue='hello')
 
 
 def callback(ch, method, properties, body):
-    print(" [x] Received %r" % body)
+    print(" [x] Received %r" % body + str(datetime.datetime.now()))
 
 
 # In[ ]:
@@ -32,7 +33,6 @@ channel.basic_consume(callback,
 
 
 # In[ ]:
-
 
 print(' [*] Waiting for messages. To exit press CTRL+C')
 channel.start_consuming()

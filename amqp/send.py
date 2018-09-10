@@ -5,12 +5,13 @@
 
 
 import pika
-
+import datetime
 
 # In[3]:
 
-
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+credentials = pika.PlainCredentials(username='uday', password='uday1201')
+#connection = pika.BlockingConnection(pika.ConnectionParameters(host='192.168.1.40',credentials=credentials))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost',credentials=credentials))
 channel = connection.channel()
 
 
@@ -26,5 +27,7 @@ channel.queue_declare(queue='hello')
 channel.basic_publish(exchange='',
                       routing_key='hello',
                       body='Hello World!')
-print(" [x] Sent 'Hello World!'")
+
+
+print(" [x] Sent 'Hello World!'" + str(datetime.datetime.now()))
 
